@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.motorola.nrenabler"
+    android:sharedUserId="android.uid.phone">
+
+    <uses-permission android:name="com.qualcomm.permission.USE_QCRIL_MSG_TUNNEL" />
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+
+    <application
+        android:label="MotoExtTelephony"
+        android:persistent="true"
+        android:directBootAware="true"
+        android:theme="@style/Theme.SubSettingsBase.Expressive">
+
+        <activity
+            android:exported="false"
+            android:label="@string/sim_switch_activity_label"
+            android:name=".SimSwitchActivity">
+
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data android:name="com.android.settings.category"
+                       android:value="com.android.settings.category.ia.wireless" />
+            <meta-data android:name="com.android.settings.icon"
+                       android:resource="@drawable/ic_sim_card_download" />
+            <meta-data android:name="com.android.settings.icon_tintable"
+                       android:value="true" />
+            <meta-data android:name="com.android.settings.order"
+                       android:value="-10" />
+            <meta-data android:name="com.android.settings.profile"
+                       android:value="primary_profile_only" />
+        </activity>
+
+        <service
+            android:name=".NrEnablerService" />
+
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
